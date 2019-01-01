@@ -9,6 +9,6 @@ int prompt_promptInt();
 
 double prompt_promptDouble();
 
-void prompt_promptGrid();
+char* prompt_promptGrid();
 
 #endif //SOKOBAN_C_PROMPT_H

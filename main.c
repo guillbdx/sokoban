@@ -7,6 +7,14 @@
 int main()
 {
 
+    char* filename = prompt_promptGrid();
+
+    printf("%s", filename);
+
+
+
+
+    free(filename);
 
     return EXIT_SUCCESS;
 }
