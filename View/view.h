@@ -18,8 +18,10 @@ struct View
 
 void view_initSDL();
 
-void view_quitSDL();
+void view_free(View* view);
 
 View* view_initView();
+
+void view_display(Grid* grid, View* view);
 
 #endif //SOKOBAN_C_VIEW_H

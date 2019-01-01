@@ -7,7 +7,6 @@
 #include "Service/prompt.h"
 
 void pause()
-
 {
 
     int continuer = 1;
@@ -44,15 +43,15 @@ int main(int argc, char *argv[])
 
 
     view_initSDL();
-
     View* view = view_initView();
+    view_display(grid, view);
 
 
-    SDL_Flip(view->window);
+
     pause();
 
 
-    view_quitSDL();
+    view_free(view);
     free(filename);
     grid_free(grid);
 

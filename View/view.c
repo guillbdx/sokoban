@@ -35,8 +35,15 @@ void view_initSDL()
     }
 }
 
-void view_quitSDL()
+void view_free(View* view)
 {
+    free(view->window);
+    free(view->wall);
+    free(view->ground);
+    free(view->block);
+    free(view->stand);
+    free(view->sokoban);
+
     TTF_Quit();
     SDL_Quit();
 }
@@ -69,4 +76,49 @@ View* view_initView()
     view->sokoban = sokoban;
 
     return view;
+}
+
+void view_display(Grid* grid, View* view)
+{
+    for (int i = 0; i < grid->numberWalls; i++) {
+        SDL_Rect position;
+        position.x = (Sint16)(grid->walls[i]->x * 60);
+        position.y = (Sint16)(grid->walls[i]->y * 60);
+        SDL_BlitSurface(view->wall, NULL, view->window, &position);
+    }
+
+    for (int i = 0; i < grid->numberGrounds; i++) {
+        SDL_Rect position;
+        position.x = (Sint16)(grid->grounds[i]->x * 60);
+        position.y = (Sint16)(grid->grounds[i]->y * 60);
+        SDL_BlitSurface(view->ground, NULL, view->window, &position);
+    }
+
+    for (int i = 0; i < grid->numberBlocks; i++) {
+        SDL_Rect position;
+        position.x = (Sint16)(grid->blocks[i]->x * 60);
+        position.y = (Sint16)(grid->blocks[i]->y * 60);
+        SDL_BlitSurface(view->block, NULL, view->window, &position);
+    }
+
+    for (int i = 0; i < grid->numberStands; i++) {
+        SDL_Rect position;
+        position.x = (Sint16)(grid->stands[i]->x * 60);
+        position.y = (Sint16)(grid->stands[i]->y * 60);
+        SDL_BlitSurface(view->stand, NULL, view->window, &position);
+    }
+
+    SDL_Rect position;
+    position.x = (Sint16)(grid->sokobans[0]->x * 60);
+    position.y = (Sint16)(grid->sokobans[0]->y * 60);
+    SDL_BlitSurface(view->sokoban, NULL, view->window, &position);
+
+
+
+
+
+
+
+
+    SDL_Flip(view->window);
 }
