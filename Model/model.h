@@ -16,6 +16,10 @@ struct Grid
     Position** stands;
     Position** blocks;
     Position** sokobans;
+    int numberGrounds;
+    int numberWalls;
+    int numberStands;
+    int numberBlocks;
 };
 
 typedef struct Move Move;

@@ -16,5 +16,6 @@ Grid* grid_init(
         char* filename
         );
 
+void grid_free(Grid* grid);
 
 #endif //SOKOBAN_C_GRID_H

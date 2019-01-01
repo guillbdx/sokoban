@@ -148,40 +148,35 @@ void setPositions(
 }
 
 void displayInConsole(
-        Grid* grid,
-        int numberWalls,
-        int numberGrounds,
-        int numberStands,
-        int numberBlocks
+        Grid* grid
 )
 {
-    printf("Calcul des nombres à partir du fichier : \n");
-    printf("Nombre de walls : %d.\n", numberWalls);
-    printf("Nombre de grounds : %d.\n", numberGrounds);
-    printf("Nombre de blocks : %d.\n", numberBlocks);
-    printf("Nombre de stands : %d.\n", numberStands);
+    printf("Nombre de walls : %d.\n", grid->numberWalls);
+    printf("Nombre de grounds : %d.\n", grid->numberGrounds);
+    printf("Nombre de blocks : %d.\n", grid->numberBlocks);
+    printf("Nombre de stands : %d.\n", grid->numberStands);
     printf("\n");
 
     printf("Stands : \n");
-    for (int i = 0; i < numberStands; i++) {
+    for (int i = 0; i < grid->numberStands; i++) {
         printf("%d, %d\n", grid->stands[i]->x, grid->stands[i]->y);
     }
     printf("\n");
 
     printf("Blocks : \n");
-    for (int i = 0; i < numberBlocks; i++) {
+    for (int i = 0; i < grid->numberBlocks; i++) {
         printf("%d, %d\n", grid->blocks[i]->x, grid->blocks[i]->y);
     }
     printf("\n");
 
     printf("Grounds : \n");
-    for (int i = 0; i < numberGrounds; i++) {
+    for (int i = 0; i < grid->numberGrounds; i++) {
         printf("%d, %d\n", grid->grounds[i]->x, grid->grounds[i]->y);
     }
     printf("\n");
 
     printf("Walls : \n");
-    for (int i = 0; i < numberWalls; i++) {
+    for (int i = 0; i < grid->numberWalls; i++) {
         printf("%d, %d\n", grid->walls[i]->x, grid->walls[i]->y);
     }
     printf("\n");
@@ -216,6 +211,7 @@ Grid* grid_init(
             + numberStands * sizeof(Position)
             + numberBlocks * sizeof(Position)
             + sizeof(Position)
+            + 4 * sizeof(int)
             );
 
     grid->walls = walls;
@@ -224,8 +220,17 @@ Grid* grid_init(
     grid->blocks = blocks;
     grid->sokobans = sokobans;
 
-    // displayInConsole(grid, numberWalls, numberGrounds, numberStands, numberBlocks);
+    grid->numberGrounds = numberGrounds;
+    grid->numberWalls = numberWalls;
+    grid->numberStands = numberStands;
+    grid->numberBlocks = numberBlocks;
+
+    displayInConsole(grid);
 
     return grid;
 }
 
+void grid_free(Grid* grid)
+{
+
+}

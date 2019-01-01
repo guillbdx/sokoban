@@ -13,7 +13,6 @@ int main()
 
     Grid* grid = grid_init(filename);
 
-    yo();
 
 
     free(filename);
