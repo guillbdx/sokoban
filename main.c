@@ -37,7 +37,7 @@ int main()
     }
 
 
-
+    move_free(moveStack);
     view_free(view);
     free(filename);
     grid_free(grid);

@@ -33,6 +33,7 @@ typedef struct MoveStack MoveStack;
 struct MoveStack
 {
     Move* firstMove;
+    int numberMoves;
 };
 
 #endif //SOKOBAN_C_MODEL_H
