@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "Model/model.h"
+#include "Model/grid.h"
 #include "Service/prompt.h"
 
 int main()
@@ -9,7 +10,7 @@ int main()
 
     char* filename = prompt_promptGrid();
 
-    printf("%s", filename);
+    grid_init(filename);
 
 
 
