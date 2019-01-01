@@ -19,5 +19,5 @@ void game_move(Grid* grid, View* view, MoveStack* moveStack, int direction)
 
     view_display(grid, view);
 
-    move_displayInConsole(moveStack);
+    // move_displayInConsole(moveStack);
 }
