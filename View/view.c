@@ -113,12 +113,5 @@ void view_display(Grid* grid, View* view)
     position.y = (Sint16)(grid->sokobans[0]->y * 60);
     SDL_BlitSurface(view->sokoban, NULL, view->window, &position);
 
-
-
-
-
-
-
-
     SDL_Flip(view->window);
 }
