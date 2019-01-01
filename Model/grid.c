@@ -306,8 +306,6 @@ Grid* grid_init(
 
     grid_setPositions(filename, grid);
 
-    // displayInConsole(grid);
-
     return grid;
 }
 

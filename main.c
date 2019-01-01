@@ -32,7 +32,12 @@ int main()
                 game_move(grid, view, moveStack, event.key.keysym.sym);
                 break;
             case SDL_MOUSEBUTTONUP:
-                game_reset(grid, view, moveStack, filename);
+                if (SDL_BUTTON_RIGHT == event.button.button) {
+                    game_reset(grid, view, moveStack, filename);
+                }
+                if (SDL_BUTTON_LEFT == event.button.button) {
+                    game_undo(grid, view, moveStack, filename);
+                }
                 break;
             default:
                 break;
