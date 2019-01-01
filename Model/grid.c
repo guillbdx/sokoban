@@ -225,12 +225,25 @@ Grid* grid_init(
     grid->numberStands = numberStands;
     grid->numberBlocks = numberBlocks;
 
-    displayInConsole(grid);
+    // displayInConsole(grid);
 
     return grid;
 }
 
 void grid_free(Grid* grid)
 {
-
+    for (int i = 0; i < grid->numberWalls; i++) {
+        free(grid->walls[i]);
+    }
+    for (int i = 0; i < grid->numberGrounds; i++) {
+        free(grid->grounds[i]);
+    }
+    for (int i = 0; i < grid->numberStands; i++) {
+        free(grid->stands[i]);
+    }
+    for (int i = 0; i < grid->numberBlocks; i++) {
+        free(grid->blocks[i]);
+    }
+    free(grid->sokobans[0]);
+    free(grid);
 }

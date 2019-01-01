@@ -1,6 +1,9 @@
 #ifndef SOKOBAN_C_VIEW_H
 #define SOKOBAN_C_VIEW_H
 
+#include <SDL.h>
+#include <SDL_image.h>
+
 typedef struct View View;
 struct View
 {

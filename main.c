@@ -16,6 +16,7 @@ int main()
 
 
     free(filename);
+    grid_free(grid);
 
     return EXIT_SUCCESS;
 }
