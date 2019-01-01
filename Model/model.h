@@ -29,7 +29,7 @@ struct Move
     Move* nextMove;
 };
 
-typedef struct MoveStack MoveStak;
+typedef struct MoveStack MoveStack;
 struct MoveStack
 {
     Move* firstMove;

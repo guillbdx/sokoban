@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "Model/model.h"
 #include "Model/grid.h"
+#include "Model/move.h"
 #include "View/view.h"
 #include "Service/prompt.h"
 #include "Service/game.h"
@@ -13,12 +14,11 @@ int main()
     char* filename = prompt_promptGrid();
     Grid* grid = grid_init(filename);
 
-
     view_initSDL();
     View* view = view_initView();
     view_display(grid, view);
 
-
+    MoveStack* moveStack = move_init();
 
     bool continu = true;
     while (continu) {
@@ -29,7 +29,7 @@ int main()
                 continu = false;
                 break;
             case SDL_KEYDOWN:
-                game_move(grid, view, event.key.keysym.sym);
+                game_move(grid, view, moveStack, event.key.keysym.sym);
                 break;
             default:
                 break;

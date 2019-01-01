@@ -4,6 +4,6 @@
 #include "../Model/model.h"
 #include "../View/view.h"
 
-void game_move(Grid* grid, View* view, int direction);
+void game_move(Grid* grid, View* view, MoveStack* moveStack, int direction);
 
 #endif //SOKOBAN_C_GAME_H
