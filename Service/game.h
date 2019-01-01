@@ -1,0 +1,4 @@
+#ifndef SOKOBAN_C_GAME_H
+#define SOKOBAN_C_GAME_H
+
+#endif //SOKOBAN_C_GAME_H

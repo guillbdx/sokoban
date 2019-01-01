@@ -1,8 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <SDL.h>
 #include "model.h"
 #include "grid.h"
+
+Position* getNextPosition(Position* position, int direction)
+{
+    Position* nextPosition = malloc(sizeof(Position));
+    nextPosition->x = position->x;
+    nextPosition->y = position->y;
+
+    switch (direction) {
+        case SDLK_UP:
+            nextPosition->y = position->y - 1;
+            break;
+        case SDLK_DOWN:
+            nextPosition->y = position->y + 1;
+            break;
+        case SDLK_LEFT:
+            nextPosition->x = position->x - 1;
+            break;
+        case SDLK_RIGHT:
+            nextPosition->x = position->x + 1;
+            break;
+        default:
+            break;
+    }
+
+    return nextPosition;
+}
+
+bool isWallAtPosition(Grid* grid, Position* position)
+{
+    for (int i = 0; i < grid->numberWalls; i++) {
+        if (grid->walls[i]->x == position->x && grid->walls[i]->y == position->y) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool isBlockAtPosition(Grid* grid, Position* position)
+{
+    for (int i = 0; i < grid->numberBlocks; i++) {
+        if (grid->blocks[i]->x == position->x && grid->blocks[i]->y == position->y) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 void setNumberPositions(
         char* filename,
@@ -246,4 +295,29 @@ void grid_free(Grid* grid)
     }
     free(grid->sokobans[0]);
     free(grid);
+}
+
+
+
+bool grid_canMove(Grid* grid, int direction)
+{
+    Position* nextPosition = getNextPosition(grid->sokobans[0], direction);
+    Position* nextNextPosition = getNextPosition(nextPosition, direction);
+
+
+    if (isWallAtPosition(grid, nextPosition)) {
+        return false;
+    }
+
+    if (isBlockAtPosition(grid, nextPosition)) {
+        if (isWallAtPosition(grid, nextNextPosition)) {
+            return false;
+        }
+        if (isBlockAtPosition(grid, nextNextPosition)) {
+            return false;
+        }
+        return true;
+    }
+
+    return true;
 }

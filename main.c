@@ -5,6 +5,7 @@
 #include "Model/grid.h"
 #include "View/view.h"
 #include "Service/prompt.h"
+#include "Service/game.h"
 
 void pause()
 {
@@ -47,6 +48,9 @@ int main(int argc, char *argv[])
     view_display(grid, view);
 
 
+    bool canMove = grid_canMove(grid, SDLK_RIGHT);
+
+    printf("%d\n", canMove);
 
     pause();
 
