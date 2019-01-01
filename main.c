@@ -6,6 +6,36 @@
 #include "View/view.h"
 #include "Service/prompt.h"
 
+void pause()
+
+{
+
+    int continuer = 1;
+
+    SDL_Event event;
+
+
+
+    while (continuer)
+
+    {
+
+        SDL_WaitEvent(&event);
+
+        switch(event.type)
+
+        {
+
+            case SDL_QUIT:
+
+                continuer = 0;
+
+        }
+
+    }
+
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -15,12 +45,16 @@ int main(int argc, char *argv[])
 
     view_initSDL();
 
+    View* view = view_initView();
+
+
+    SDL_Flip(view->window);
+    pause();
+
 
     view_quitSDL();
     free(filename);
     grid_free(grid);
-
-
 
     return EXIT_SUCCESS;
 }
