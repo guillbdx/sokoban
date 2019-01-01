@@ -93,45 +93,47 @@ void setPositions(
             continue;
         }
 
-        Position position = {x, y};
+        Position* position = malloc(2 * sizeof(Position));
+        position->x = x;
+        position->y = y;
 
         switch (currentCharacter) {
             case '#': // wall
-                walls[wallsIndice] = &position;
+                walls[wallsIndice] = position;
                 wallsIndice++;
                 break;
             case ' ': // ground
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             case '.': // stand on ground
-                stands[standsIndice] = &position;
+                stands[standsIndice] = position;
                 standsIndice++;
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             case '$': // block on ground
-                blocks[blocksIndice] = &position;
+                blocks[blocksIndice] = position;
                 blocksIndice++;
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             case '@': // sokoban on ground
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             case '*': // block on stand on ground
-                blocks[blocksIndice] = &position;
+                blocks[blocksIndice] = position;
                 blocksIndice++;
-                stands[standsIndice] = &position;
+                stands[standsIndice] = position;
                 standsIndice++;
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             case '+': // sokoban on stand on ground
-                stands[standsIndice] = &position;
+                stands[standsIndice] = position;
                 standsIndice++;
-                grounds[groundsIndice] = &position;
+                grounds[groundsIndice] = position;
                 groundsIndice++;
                 break;
             default:
@@ -142,21 +144,58 @@ void setPositions(
     }
 }
 
-void grid_init(
-        char* filename
-        )
+void displayInConsole(
+        Grid* grid,
+        int numberWalls,
+        int numberGrounds,
+        int numberStands,
+        int numberBlocks
+)
 {
-    int numberGrounds = 0;
-    int numberWalls = 0;
-    int numberStands = 0;
-    int numberBlocks = 0;
-
-    setNumberPositions(filename, &numberGrounds, &numberWalls, &numberStands, &numberBlocks);
-
+    printf("Calcul des nombres à partir du fichier : \n");
     printf("Nombre de walls : %d.\n", numberWalls);
     printf("Nombre de grounds : %d.\n", numberGrounds);
     printf("Nombre de blocks : %d.\n", numberBlocks);
     printf("Nombre de stands : %d.\n", numberStands);
+    printf("\n");
+
+    printf("Stands : \n");
+    for (int i = 0; i < numberStands; i++) {
+        printf("%d, %d\n", grid->stands[i]->x, grid->stands[i]->y);
+    }
+    printf("\n");
+
+    printf("Blocks : \n");
+    for (int i = 0; i < numberBlocks; i++) {
+        printf("%d, %d\n", grid->blocks[i]->x, grid->blocks[i]->y);
+    }
+    printf("\n");
+
+    printf("Grounds : \n");
+    for (int i = 0; i < numberGrounds; i++) {
+        printf("%d, %d\n", grid->grounds[i]->x, grid->grounds[i]->y);
+    }
+    printf("\n");
+
+    printf("Walls : \n");
+    for (int i = 0; i < numberWalls; i++) {
+        printf("%d, %d\n", grid->walls[i]->x, grid->walls[i]->y);
+    }
+    printf("\n");
+
+
+}
+
+Grid* grid_init(
+        char* filename
+        )
+{
+    int numberWalls = 0;
+    int numberGrounds = 0;
+    int numberStands = 0;
+    int numberBlocks = 0;
+
+    setNumberPositions(filename, &numberGrounds, &numberWalls, &numberStands, &numberBlocks);
 
     Position** walls = malloc(numberWalls * sizeof(Position));
     Position** grounds = malloc(numberGrounds * sizeof(Position));
@@ -165,4 +204,19 @@ void grid_init(
 
     setPositions(filename, walls, grounds, stands, blocks);
 
+    Grid* grid = malloc(
+            numberWalls * sizeof(Position)
+            + numberGrounds * sizeof(Position)
+            + numberStands * sizeof(Position)
+            + numberBlocks * sizeof(Position)
+            );
+    grid->walls = walls;
+    grid->grounds = grounds;
+    grid->stands = stands;
+    grid->blocks = blocks;
+
+    displayInConsole(grid, numberWalls, numberGrounds, numberStands, numberBlocks);
+
+    return grid;
 }
+

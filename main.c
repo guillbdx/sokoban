@@ -10,8 +10,7 @@ int main()
 
     char* filename = prompt_promptGrid();
 
-    grid_init(filename);
-
+    Grid* grid = grid_init(filename);
 
 
     free(filename);

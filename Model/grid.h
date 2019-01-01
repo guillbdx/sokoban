@@ -12,8 +12,9 @@
     + : sokoban on stand on ground
 */
 
-void grid_init(
+Grid* grid_init(
         char* filename
         );
+
 
 #endif //SOKOBAN_C_GRID_H
