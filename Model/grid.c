@@ -69,7 +69,8 @@ void setPositions(
         Position** walls,
         Position** grounds,
         Position** stands,
-        Position** blocks
+        Position** blocks,
+        Position** sokobans
         )
 {
     FILE* file;
@@ -93,7 +94,7 @@ void setPositions(
             continue;
         }
 
-        Position* position = malloc(2 * sizeof(Position));
+        Position* position = malloc(sizeof(Position));
         position->x = x;
         position->y = y;
 
@@ -121,6 +122,7 @@ void setPositions(
             case '@': // sokoban on ground
                 grounds[groundsIndice] = position;
                 groundsIndice++;
+                sokobans[0] = position;
                 break;
             case '*': // block on stand on ground
                 blocks[blocksIndice] = position;
@@ -135,6 +137,7 @@ void setPositions(
                 standsIndice++;
                 grounds[groundsIndice] = position;
                 groundsIndice++;
+                sokobans[0] = position;
                 break;
             default:
                 break;
@@ -183,7 +186,9 @@ void displayInConsole(
     }
     printf("\n");
 
-
+    printf("Sokoban : \n");
+    printf("%d, %d\n", grid->sokobans[0]->x, grid->sokobans[0]->y);
+    printf("\n");
 }
 
 Grid* grid_init(
@@ -201,19 +206,25 @@ Grid* grid_init(
     Position** grounds = malloc(numberGrounds * sizeof(Position));
     Position** stands = malloc(numberStands * sizeof(Position));
     Position** blocks = malloc(numberBlocks * sizeof(Position));
+    Position** sokobans = malloc(sizeof(Position));
 
-    setPositions(filename, walls, grounds, stands, blocks);
+    setPositions(filename, walls, grounds, stands, blocks, sokobans);
 
     Grid* grid = malloc(
             numberWalls * sizeof(Position)
             + numberGrounds * sizeof(Position)
             + numberStands * sizeof(Position)
             + numberBlocks * sizeof(Position)
+            + sizeof(Position)
             );
+
     grid->walls = walls;
     grid->grounds = grounds;
     grid->stands = stands;
     grid->blocks = blocks;
+    grid->sokobans = sokobans;
+
+
 
     displayInConsole(grid, numberWalls, numberGrounds, numberStands, numberBlocks);
 
