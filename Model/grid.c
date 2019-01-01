@@ -334,7 +334,7 @@ void grid_free(Grid* grid)
     free(grid);
 }
 
-bool move(Grid* grid, int direction)
+bool grid_move(Grid* grid, int direction)
 {
     if (!canMove(grid, direction)) {
         return false;

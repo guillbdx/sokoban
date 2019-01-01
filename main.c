@@ -7,36 +7,7 @@
 #include "Service/prompt.h"
 #include "Service/game.h"
 
-void pause()
-{
-
-    int continuer = 1;
-
-    SDL_Event event;
-
-
-
-    while (continuer)
-
-    {
-
-        SDL_WaitEvent(&event);
-
-        switch(event.type)
-
-        {
-
-            case SDL_QUIT:
-
-                continuer = 0;
-
-        }
-
-    }
-
-}
-
-int main(int argc, char *argv[])
+int main()
 {
 
     char* filename = prompt_promptGrid();
@@ -48,13 +19,23 @@ int main(int argc, char *argv[])
     view_display(grid, view);
 
 
-    bool hasMoved = move(grid, SDLK_RIGHT);
 
-    view_display(grid, view);
+    bool continu = true;
+    while (continu) {
+        SDL_Event event;
+        SDL_WaitEvent(&event);
+        switch (event.type) {
+            case SDL_QUIT:
+                continu = false;
+                break;
+            case SDL_KEYDOWN:
+                game_move(grid, view, event.key.keysym.sym);
+                break;
+            default:
+                break;
+        }
+    }
 
-    //printf("%d\n", hasMoved);
-
-    pause();
 
 
     view_free(view);
