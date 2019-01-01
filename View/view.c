@@ -12,14 +12,17 @@ SDL_Surface* createWindow()
     SDL_Surface* window;
     window = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
     SDL_WM_SetCaption("Sokoban", NULL);
-    SDL_Surface* background;
-    background = IMG_Load("Assets/images/sky.jpeg");
+
+    return window;
+}
+
+void applyBackground(View* view)
+{
+
     SDL_Rect backgroundPosition;
     backgroundPosition.x = 0;
     backgroundPosition.y = 0;
-    SDL_BlitSurface(background, NULL, window, &backgroundPosition);
-
-    return window;
+    SDL_BlitSurface(view->background, NULL, view->window, &backgroundPosition);
 }
 
 void view_initSDL()
@@ -43,6 +46,7 @@ void view_free(View* view)
     free(view->block);
     free(view->stand);
     free(view->sokoban);
+    free(view->background);
 
     TTF_Quit();
     SDL_Quit();
@@ -50,7 +54,7 @@ void view_free(View* view)
 
 View* view_initView()
 {
-    View* view = malloc(6 * sizeof(SDL_Surface));
+    View* view = malloc(7 * sizeof(SDL_Surface));
 
     SDL_Surface* window = createWindow();
     view->window = window;
@@ -75,11 +79,19 @@ View* view_initView()
     sokoban = IMG_Load("Assets/images/sokoban.png");
     view->sokoban = sokoban;
 
+    SDL_Surface* background;
+    background = IMG_Load("Assets/images/sky.jpeg");
+    view->background = background;
+
     return view;
 }
 
 void view_display(Grid* grid, View* view)
 {
+    SDL_FillRect(view->window, NULL, SDL_MapRGB(view->window->format, 255, 255, 255));
+
+    applyBackground(view);
+
     for (int i = 0; i < grid->numberWalls; i++) {
         SDL_Rect position;
         position.x = (Sint16)(grid->walls[i]->x * 60);
@@ -94,18 +106,18 @@ void view_display(Grid* grid, View* view)
         SDL_BlitSurface(view->ground, NULL, view->window, &position);
     }
 
-    for (int i = 0; i < grid->numberBlocks; i++) {
-        SDL_Rect position;
-        position.x = (Sint16)(grid->blocks[i]->x * 60);
-        position.y = (Sint16)(grid->blocks[i]->y * 60);
-        SDL_BlitSurface(view->block, NULL, view->window, &position);
-    }
-
     for (int i = 0; i < grid->numberStands; i++) {
         SDL_Rect position;
         position.x = (Sint16)(grid->stands[i]->x * 60);
         position.y = (Sint16)(grid->stands[i]->y * 60);
         SDL_BlitSurface(view->stand, NULL, view->window, &position);
+    }
+
+    for (int i = 0; i < grid->numberBlocks; i++) {
+        SDL_Rect position;
+        position.x = (Sint16)(grid->blocks[i]->x * 60);
+        position.y = (Sint16)(grid->blocks[i]->y * 60);
+        SDL_BlitSurface(view->block, NULL, view->window, &position);
     }
 
     SDL_Rect position;

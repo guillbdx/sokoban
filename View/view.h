@@ -14,6 +14,7 @@ struct View
     SDL_Surface* stand;
     SDL_Surface* block;
     SDL_Surface* sokoban;
+    SDL_Surface* background;
 };
 
 void view_initSDL();

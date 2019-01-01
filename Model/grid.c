@@ -53,6 +53,15 @@ bool isBlockAtPosition(Grid* grid, Position* position)
     return false;
 }
 
+int getBlockIndiceAtPosition(Grid* grid, Position* position)
+{
+    for (int i = 0; i < grid->numberBlocks; i++) {
+        if (grid->blocks[i]->x == position->x && grid->blocks[i]->y == position->y) {
+            return i;
+        }
+    }
+}
+
 void setNumberPositions(
         char* filename,
         int* numberGrounds,
@@ -235,6 +244,34 @@ void displayInConsole(
     printf("\n");
 }
 
+bool canMove(Grid* grid, int direction)
+{
+    Position* nextPosition = getNextPosition(grid->sokobans[0], direction);
+    if (isWallAtPosition(grid, nextPosition)) {
+        free(nextPosition);
+        return false;
+    }
+
+    if (isBlockAtPosition(grid, nextPosition)) {
+        Position* nextNextPosition = getNextPosition(nextPosition, direction);
+        if (isWallAtPosition(grid, nextNextPosition)) {
+            free(nextPosition);
+            free(nextNextPosition);
+            return false;
+        }
+        if (isBlockAtPosition(grid, nextNextPosition)) {
+            free(nextPosition);
+            free(nextNextPosition);
+            return false;
+        }
+        free(nextPosition);
+        free(nextNextPosition);
+        return true;
+    }
+    free(nextPosition);
+    return true;
+}
+
 Grid* grid_init(
         char* filename
         )
@@ -297,27 +334,24 @@ void grid_free(Grid* grid)
     free(grid);
 }
 
-
-
-bool grid_canMove(Grid* grid, int direction)
+bool move(Grid* grid, int direction)
 {
-    Position* nextPosition = getNextPosition(grid->sokobans[0], direction);
-    Position* nextNextPosition = getNextPosition(nextPosition, direction);
-
-
-    if (isWallAtPosition(grid, nextPosition)) {
+    if (!canMove(grid, direction)) {
         return false;
     }
 
-    if (isBlockAtPosition(grid, nextPosition)) {
-        if (isWallAtPosition(grid, nextNextPosition)) {
-            return false;
-        }
-        if (isBlockAtPosition(grid, nextNextPosition)) {
-            return false;
-        }
+    Position* nextPosition = getNextPosition(grid->sokobans[0], direction);
+
+    if (false == isBlockAtPosition(grid, nextPosition)) {
+        grid->sokobans[0] = nextPosition;
         return true;
     }
+
+    Position* nextNextPosition = getNextPosition(nextPosition, direction);
+    int indiceBlock = getBlockIndiceAtPosition(grid, nextPosition);
+    grid->blocks[indiceBlock] = nextNextPosition;
+    grid->sokobans[0] = nextPosition;
+
 
     return true;
 }

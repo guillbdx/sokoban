@@ -48,9 +48,11 @@ int main(int argc, char *argv[])
     view_display(grid, view);
 
 
-    bool canMove = grid_canMove(grid, SDLK_RIGHT);
+    bool hasMoved = move(grid, SDLK_RIGHT);
 
-    printf("%d\n", canMove);
+    view_display(grid, view);
+
+    //printf("%d\n", hasMoved);
 
     pause();
 

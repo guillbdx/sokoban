@@ -18,6 +18,6 @@ Grid* grid_init(
 
 void grid_free(Grid* grid);
 
-bool grid_canMove(Grid* grid, int direction);
+bool move(Grid* grid, int direction);
 
 #endif //SOKOBAN_C_GRID_H
