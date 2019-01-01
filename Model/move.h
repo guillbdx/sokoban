@@ -9,4 +9,7 @@ void move_reset(MoveStack* moveStack);
 
 void move_free(MoveStack* moveStack);
 
+void move_displayInConsole(MoveStack* moveStack);
+
+
 #endif //SOKOBAN_C_MOVE_H

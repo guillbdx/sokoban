@@ -4,6 +4,20 @@
 #include "model.h"
 #include "move.h"
 
+Move** getOrderedMoves(MoveStack* moveStack)
+{
+    Move** orderedMoves = malloc(moveStack->numberMoves * sizeof(Move));
+    int indice = moveStack->numberMoves - 1;
+    Move* currentMove = moveStack->firstMove;
+    while (NULL != currentMove) {
+        orderedMoves[indice] = currentMove;
+        indice--;
+        currentMove = currentMove->nextMove;
+    }
+
+    return orderedMoves;
+}
+
 MoveStack* move_init()
 {
     MoveStack* moveStack = malloc(sizeof(MoveStack));
@@ -49,4 +63,15 @@ void move_free(MoveStack* moveStack)
 {
     move_reset(moveStack);
     free(moveStack);
+}
+
+
+
+void move_displayInConsole(MoveStack* moveStack)
+{
+    Move** moves = getOrderedMoves(moveStack);
+    for (int i = 0; i < moveStack->numberMoves; i++) {
+        printf("%d\n", moves[i]->direction);
+    }
+    printf(" \n");
 }
