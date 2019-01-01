@@ -6,17 +6,21 @@
 #include "View/view.h"
 #include "Service/prompt.h"
 
-int main()
+int main(int argc, char *argv[])
 {
 
     char* filename = prompt_promptGrid();
-
     Grid* grid = grid_init(filename);
 
 
+    view_initSDL();
 
+
+    view_quitSDL();
     free(filename);
     grid_free(grid);
+
+
 
     return EXIT_SUCCESS;
 }

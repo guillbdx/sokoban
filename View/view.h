@@ -10,6 +10,8 @@ struct View
     SDL_Surface* window;
 };
 
+void view_initSDL();
 
+void view_quitSDL();
 
 #endif //SOKOBAN_C_VIEW_H
