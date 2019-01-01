@@ -14,6 +14,6 @@ file(GLOB GRIDS ${PROJECT_SOURCE_DIR}/Assets/*)
 file(COPY ${GRIDS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Assets
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_WRITE GROUP_READ WORLD_READ)
 
-add_executable(sokoban_c main.c Model/model.h Service/prompt.h Service/prompt.c Model/grid.c Model/grid.h)
+add_executable(sokoban_c main.c Model/model.h Service/prompt.h Service/prompt.c Model/grid.c Model/grid.h View/view.c View/view.h)
 
 target_link_libraries(sokoban_c ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES} ${FREETYPE_LIBRARIES} ${SDL_TTF_LIBRARIES})

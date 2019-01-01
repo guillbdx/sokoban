@@ -224,9 +224,7 @@ Grid* grid_init(
     grid->blocks = blocks;
     grid->sokobans = sokobans;
 
-
-
-    displayInConsole(grid, numberWalls, numberGrounds, numberStands, numberBlocks);
+    // displayInConsole(grid, numberWalls, numberGrounds, numberStands, numberBlocks);
 
     return grid;
 }

@@ -1,0 +1,4 @@
+#ifndef SOKOBAN_C_VIEW_H
+#define SOKOBAN_C_VIEW_H
+
+#endif //SOKOBAN_C_VIEW_H
