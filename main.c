@@ -31,6 +31,9 @@ int main()
             case SDL_KEYDOWN:
                 game_move(grid, view, moveStack, event.key.keysym.sym);
                 break;
+            case SDL_MOUSEBUTTONUP:
+                game_reset(grid, view, moveStack, filename);
+                break;
             default:
                 break;
         }

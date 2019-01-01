@@ -19,5 +19,12 @@ void game_move(Grid* grid, View* view, MoveStack* moveStack, int direction)
 
     view_display(grid, view);
 
-    // move_displayInConsole(moveStack);
+    move_displayInConsole(moveStack);
+}
+
+void game_reset(Grid* grid, View* view, MoveStack* moveStack, char* filename)
+{
+    grid_setPositions(filename, grid);
+    view_display(grid, view);
+    move_reset(moveStack);
 }

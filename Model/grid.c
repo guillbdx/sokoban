@@ -122,13 +122,9 @@ void setNumberPositions(
     }
 }
 
-void setPositions(
+void grid_setPositions(
         char* filename,
-        Position** walls,
-        Position** grounds,
-        Position** stands,
-        Position** blocks,
-        Position** sokobans
+        Grid* grid
         )
 {
     FILE* file;
@@ -139,6 +135,11 @@ void setPositions(
     int standsIndice = 0;
     int blocksIndice = 0;
 
+    Position** walls = malloc(grid->numberWalls * sizeof(Position));
+    Position** grounds = malloc(grid->numberGrounds * sizeof(Position));
+    Position** stands = malloc(grid->numberStands * sizeof(Position));
+    Position** blocks = malloc(grid->numberBlocks * sizeof(Position));
+    Position** sokobans = malloc(sizeof(Position));
 
     int currentCharacter = 0;
     int x = 0;
@@ -203,6 +204,12 @@ void setPositions(
 
         x++;
     }
+
+    grid->walls = walls;
+    grid->grounds = grounds;
+    grid->stands = stands;
+    grid->blocks = blocks;
+    grid->sokobans = sokobans;
 }
 
 void displayInConsole(
@@ -283,14 +290,6 @@ Grid* grid_init(
 
     setNumberPositions(filename, &numberGrounds, &numberWalls, &numberStands, &numberBlocks);
 
-    Position** walls = malloc(numberWalls * sizeof(Position));
-    Position** grounds = malloc(numberGrounds * sizeof(Position));
-    Position** stands = malloc(numberStands * sizeof(Position));
-    Position** blocks = malloc(numberBlocks * sizeof(Position));
-    Position** sokobans = malloc(sizeof(Position));
-
-    setPositions(filename, walls, grounds, stands, blocks, sokobans);
-
     Grid* grid = malloc(
             numberWalls * sizeof(Position)
             + numberGrounds * sizeof(Position)
@@ -298,18 +297,14 @@ Grid* grid_init(
             + numberBlocks * sizeof(Position)
             + sizeof(Position)
             + 4 * sizeof(int)
-            );
-
-    grid->walls = walls;
-    grid->grounds = grounds;
-    grid->stands = stands;
-    grid->blocks = blocks;
-    grid->sokobans = sokobans;
+    );
 
     grid->numberGrounds = numberGrounds;
     grid->numberWalls = numberWalls;
     grid->numberStands = numberStands;
     grid->numberBlocks = numberBlocks;
+
+    grid_setPositions(filename, grid);
 
     // displayInConsole(grid);
 

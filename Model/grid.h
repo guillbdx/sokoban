@@ -20,4 +20,6 @@ void grid_free(Grid* grid);
 
 bool grid_move(Grid* grid, int direction);
 
+void grid_setPositions(char* filename, Grid* grid);
+
 #endif //SOKOBAN_C_GRID_H
