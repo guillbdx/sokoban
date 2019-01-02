@@ -21,8 +21,9 @@ void game_move(Grid* grid, View* view, MoveStack* moveStack, int direction)
 void game_reset(Grid* grid, View* view, MoveStack* moveStack, char* filename)
 {
     grid_setPositions(filename, grid);
-    view_display(grid, view, moveStack);
     move_reset(moveStack);
+    view_display(grid, view, moveStack);
+
 }
 
 void game_undo(Grid* grid, View* view, MoveStack* moveStack, char* filename)

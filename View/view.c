@@ -54,7 +54,7 @@ void view_free(View* view)
 
 View* view_initView()
 {
-    View* view = malloc(7 * sizeof(SDL_Surface));
+    View* view = malloc(sizeof(View));
 
     SDL_Surface* window = createWindow();
     view->window = window;
@@ -82,6 +82,10 @@ View* view_initView()
     SDL_Surface* background;
     background = IMG_Load("Assets/images/sky.jpeg");
     view->background = background;
+
+    TTF_Font* font = NULL;
+    font = TTF_OpenFont("Assets/fonts/angelina.ttf", 40);
+    view->font = font;
 
     return view;
 }
@@ -134,13 +138,12 @@ void view_displayNumberMoves(MoveStack* moveStack, View* view)
 {
     SDL_Color textColor = {255, 255, 255};
 
-    TTF_Font* font = NULL;
-    font = TTF_OpenFont("Assets/fonts/angelina.ttf", 40);
+
     SDL_Surface* textMovesSurface;
 
     char sentence[100];
     sprintf(sentence, "Coups : %d", moveStack->numberMoves);
-    textMovesSurface = TTF_RenderText_Blended(font, sentence, textColor);
+    textMovesSurface = TTF_RenderText_Blended(view->font, sentence, textColor);
 
     SDL_Rect textPosition;
     textPosition.x = (Sint16)(view->window->w - textMovesSurface->w - 20);

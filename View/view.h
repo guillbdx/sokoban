@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "../Model/model.h"
 
 typedef struct View View;
@@ -15,6 +16,7 @@ struct View
     SDL_Surface* block;
     SDL_Surface* sokoban;
     SDL_Surface* background;
+    TTF_Font* font;
 };
 
 void view_initSDL();
