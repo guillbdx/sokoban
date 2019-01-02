@@ -14,11 +14,13 @@ int main()
     char* filename = prompt_promptGrid();
     Grid* grid = grid_init(filename);
 
+    MoveStack* moveStack = move_init();
+
     view_initSDL();
     View* view = view_initView();
-    view_display(grid, view);
+    view_display(grid, view, moveStack);
 
-    MoveStack* moveStack = move_init();
+
 
     bool continu = true;
     while (continu) {

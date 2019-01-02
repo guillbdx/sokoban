@@ -23,6 +23,8 @@ void view_free(View* view);
 
 View* view_initView();
 
-void view_display(Grid* grid, View* view);
+void view_display(Grid* grid, View* view, MoveStack* moveStack);
+
+void view_displayNumberMoves(MoveStack* moveStack, View* view);
 
 #endif //SOKOBAN_C_VIEW_H

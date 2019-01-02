@@ -86,7 +86,7 @@ View* view_initView()
     return view;
 }
 
-void view_display(Grid* grid, View* view)
+void view_display(Grid* grid, View* view, MoveStack* moveStack)
 {
     SDL_FillRect(view->window, NULL, SDL_MapRGB(view->window->format, 255, 255, 255));
 
@@ -125,5 +125,25 @@ void view_display(Grid* grid, View* view)
     position.y = (Sint16)(grid->sokobans[0]->y * 60);
     SDL_BlitSurface(view->sokoban, NULL, view->window, &position);
 
+    view_displayNumberMoves(moveStack, view);
+
     SDL_Flip(view->window);
+}
+
+void view_displayNumberMoves(MoveStack* moveStack, View* view)
+{
+    SDL_Color textColor = {255, 255, 255};
+
+    TTF_Font* font = NULL;
+    font = TTF_OpenFont("Assets/fonts/angelina.ttf", 40);
+    SDL_Surface* textMovesSurface;
+
+    char sentence[100];
+    sprintf(sentence, "Coups : %d", moveStack->numberMoves);
+    textMovesSurface = TTF_RenderText_Blended(font, sentence, textColor);
+
+    SDL_Rect textPosition;
+    textPosition.x = (Sint16)(view->window->w - textMovesSurface->w - 20);
+    textPosition.y = 20;
+    SDL_BlitSurface(textMovesSurface, NULL, view->window, &textPosition);
 }
